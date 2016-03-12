@@ -1,0 +1,22 @@
+version: "2"
+services:
+  rabbit-mq:
+    image: rabbitmq:3-management
+    ports:
+      - "8080:15672"
+
+  a-to-b:
+    image: message-queue-client:latest
+    command: ["A->B", "A", "B"]
+
+  b-to-c:
+    image: message-queue-client:latest
+    command: ["B->C", "B", "C"]
+
+  c-to-d:
+    image: message-queue-client:latest
+    command: ["C->D", "C", "D"]
+
+  d-to-e:
+    image: message-queue-client:latest
+    command: ["D->E", "D", "E"]
