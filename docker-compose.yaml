@@ -7,16 +7,25 @@ services:
 
   a-to-b:
     image: message-queue-client:latest
-    command: ["A->B", "A", "B"]
+    command: ["SHUFFLE", "A", "B"]
+    depends_on:
+      - rabbit-mq
 
   b-to-c:
     image: message-queue-client:latest
-    command: ["B->C", "B", "C"]
+    command: ["SHUFFLE", "B", "C"]
+    depends_on:
+      - rabbit-mq
 
   c-to-d:
     image: message-queue-client:latest
-    command: ["C->D", "C", "D"]
+    command: ["SHUFFLE", "C", "D"]
+    depends_on:
+      - rabbit-mq
 
   d-to-e:
     image: message-queue-client:latest
-    command: ["D->E", "D", "E"]
+    command: ["SHUFFLE", "D", "E"]
+    depends_on:
+      - rabbit-mq
+      

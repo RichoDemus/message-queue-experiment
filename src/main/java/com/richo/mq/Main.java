@@ -15,12 +15,13 @@ public class Main
 	{
 		if (args.length != 3)
 		{
-			System.out.println("Expected arguments: name consumeQueue produceQueue");
+			System.out.println("Expected arguments: type (SHUFFLE) consumeQueue produceQueue");
 			System.exit(1);
 		}
-		final String name = args[0];
+		final Type type = Type.valueOf(args[0]);
 		final String consumeQueue = args[1];
 		final String produceQueue = args[2];
+		final String name = consumeQueue + "->" + produceQueue;
 		final String exchangeName = consumeQueue + "-to-" + produceQueue + "-exchange";
 		final String routingKey = consumeQueue + "-to-" + produceQueue + "-route";
 
@@ -48,7 +49,6 @@ public class Main
 									   byte[] body) throws IOException
 			{
 				String message = new String(body, "UTF-8");
-				System.out.println("Took a message from " + consumeQueue + " and put it in " + produceQueue);
 				channel.basicPublish(exchangeName, routingKey, null, (message + ", " + name).getBytes());
 			}
 		});
