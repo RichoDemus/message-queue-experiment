@@ -4,9 +4,9 @@ public class Main
 {
 	public static void main(String[] args) throws Exception
 	{
-		if (args.length != 3)
+		if (args.length == 0)
 		{
-			System.out.println("Expected arguments: type (SHUFFLE) consumeQueue produceQueue");
+			System.out.println("Expected argument type (SHUFFLE/LOAD)");
 			System.exit(1);
 		}
 		final Type type = Type.valueOf(args[0]);
@@ -16,6 +16,9 @@ public class Main
 		{
 			case SHUFFLE:
 				node = new Shuffler(args);
+				break;
+			case LOAD:
+				node = new Loader(args);
 				break;
 			default:
 				System.out.println("Unhandled type: " + type);

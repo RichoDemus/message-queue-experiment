@@ -5,6 +5,12 @@ services:
     ports:
       - "8080:15672"
 
+  starter:
+    image: message-queue-client:latest
+    command: ["LOAD", "A", "E", "10"]
+    depends_on:
+      - rabbit-mq
+
   a-to-b:
     image: message-queue-client:latest
     command: ["SHUFFLE", "A", "B"]
@@ -28,4 +34,3 @@ services:
     command: ["SHUFFLE", "D", "E"]
     depends_on:
       - rabbit-mq
-      
